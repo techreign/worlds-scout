@@ -30,4 +30,4 @@ Big-match day: share a face-off link, e.g. `https://techreign.github.io/worlds-s
 
 ## Sponsor pitch (after ~3 days of Plausible numbers)
 
-> Worlds Scout is a free daily Worlds 2026 companion (puzzle, pick'em, stats) with X daily visitors. It runs through the final on Nov 8. We have one sponsor slot under the app, a logo and link on every page, for $___ through the end of Worlds. Interested?
+> Worlds Scout is a free daily Worlds 2026 companion (puzzle, pick'em, stats) with X daily visitors. It runs through the final on Nov 14. We have one sponsor slot under the app, a logo and link on every page, for $___ through the end of Worlds. Interested?
