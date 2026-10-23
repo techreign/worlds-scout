@@ -1,0 +1,5 @@
+data/cache/
+dist/
+__pycache__/
+*.png
+!static/*.png

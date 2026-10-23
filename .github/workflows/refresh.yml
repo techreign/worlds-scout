@@ -1,0 +1,55 @@
+name: Refresh and deploy
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"   # every 3 hours during Worlds
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pillow
+      - name: Restore page cache
+        uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: golgg-${{ github.run_id }}
+          restore-keys: golgg-
+      - name: Refresh data
+        run: python pipeline/refresh.py
+      - name: Build
+        run: python pipeline/build.py
+      - name: Commit refreshed data
+        run: |
+          git config user.name "worlds-scout-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/worlds.json
+          git diff --cached --quiet || (git commit -m "Refresh data $(date -u +%FT%H:%MZ)" && git push)
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
