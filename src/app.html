@@ -393,7 +393,7 @@ footer a { color: var(--muted); }
 .gridhead span { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; text-align: center; }
 .gridhead span:first-child { text-align: left; }
 .guesses { display: grid; gap: 5px; }
-.grow { animation: flip .35s ease-out; }
+.grow.new .cell { animation: flip .45s ease-out both; }
 @keyframes flip { from { transform: rotateX(70deg); opacity: 0; } to { transform: none; opacity: 1; } }
 .gface { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 4px; border-radius: 10px; background: var(--tile); }
 .gface img { width: 38px; height: 38px; border-radius: 8px; object-fit: cover; object-position: top; flex: none; }
@@ -401,6 +401,7 @@ footer a { color: var(--muted); }
 .cell { display: grid; place-items: center; align-content: center; gap: 2px; min-height: 46px; padding: 4px; border-radius: 10px; font-weight: 800; font-size: 13px; text-align: center; color: #fff; overflow-wrap: anywhere; }
 .cell img { width: 22px; height: 22px; object-fit: contain; border-radius: 4px; }
 .cell i { font-style: normal; font-size: 16px; }
+.cell .sm { display: none; }
 .cell .cn { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cell.g { background: #1f9d63; } .cell.y { background: #c18f1c; } .cell.r { background: #3a2230; color: #e6c6cc; box-shadow: inset 0 0 0 1px rgba(255,70,85,.4); }
 .result { display: grid; gap: 6px; justify-items: center; text-align: center; padding: 18px; border-radius: 16px; border: 1px solid var(--line); }
@@ -409,10 +410,29 @@ footer a { color: var(--muted); }
 .result b { font-family: var(--display); font-weight: 900; font-style: italic; font-size: 38px; text-transform: uppercase; line-height: 1; }
 .result > span { color: var(--muted); }
 .rbtns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.hints { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.hint { display: grid; gap: 4px; align-content: start; padding: 8px 10px; border-radius: 10px; background: var(--tile); border: 1px dashed var(--line); min-width: 0; }
+.hint small { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.hint b { display: flex; align-items: center; gap: 6px; font-family: var(--display); font-weight: 800; font-size: 17px; text-transform: uppercase; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.hint b img { width: 24px; height: 24px; object-fit: contain; border-radius: 5px; flex: none; }
+.hint b.lock { font-family: var(--body); font-size: 12px; font-weight: 600; color: var(--muted); text-transform: none; }
+.hint.open { border-style: solid; border-color: rgba(240,195,91,.5); background: linear-gradient(180deg, rgba(240,195,91,.12), transparent), var(--tile); animation: flip .45s ease-out both; }
+.hint .mask { letter-spacing: .08em; }
+.mystery { background-size: cover; background-position: center; }
+.mystery.solved img, .mystery.failed img { filter: drop-shadow(0 0 18px rgba(0,0,0,.7)); }
+.heat { margin-top: -6px; padding: 8px 14px; border-radius: 10px; background: var(--tile); font-weight: 700; font-size: 14px; color: var(--muted); }
+.heat.hot { color: #ffb35c; background: linear-gradient(90deg, rgba(255,120,40,.22), transparent), var(--tile); }
+.heat.warm { color: var(--gold); } .heat.cold { color: #8fc8ff; }
+.rankb { display: grid; justify-items: center; padding: 8px 22px 10px; border-radius: 14px; border: 2px solid var(--rc); background: radial-gradient(160px 70px at 50% 0%, color-mix(in srgb, var(--rc) 35%, transparent), transparent), var(--tile); box-shadow: 0 0 28px color-mix(in srgb, var(--rc) 40%, transparent); animation: vspop .6s ease-out both; }
+.rankb small { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.result .rankb b { color: var(--rc); font-size: 40px; }
+.confetti { position: fixed; inset: 0; pointer-events: none; z-index: 40; overflow: hidden; }
+.confetti i { position: absolute; top: -16px; width: 8px; height: 14px; border-radius: 2px; animation: fall linear both; }
+@keyframes fall { to { transform: translateY(110vh) rotate(800deg); } }
 .srow4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center; margin-bottom: 12px; }
 .srow4 b { display: block; font-family: var(--display); font-weight: 900; font-size: 34px; line-height: 1; } .srow4 small { color: var(--muted); font-size: 12px; }
 .dist { display: grid; gap: 4px; }
-.drow { display: grid; grid-template-columns: 16px 1fr; gap: 8px; align-items: center; font-size: 13px; }
+.drow { display: grid; grid-template-columns: 86px 1fr; gap: 8px; align-items: center; font-size: 13px; }
 .drow i { display: block; font-style: normal; text-align: right; padding: 2px 8px; border-radius: 4px; background: var(--tile); font-weight: 700; font-size: 12px; }
 .drow i.me { background: var(--win); color: #062314; }
 
@@ -424,6 +444,10 @@ footer a { color: var(--muted); }
   .gridhead { display: none; }
   .grow { grid-template-columns: repeat(7, minmax(0, 1fr)); } .gface { grid-column: 1 / -1; }
   .cell { min-height: 40px; font-size: 11px; } .cell img { width: 18px; height: 18px; }
+  .cell .lg { display: none; } .cell .sm { display: inline; }
+  .hints { grid-template-columns: minmax(0, 1fr); gap: 5px; width: 100%; }
+  .hint { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 10px; }
+  .hint b { font-size: 15px; } .hint b img { width: 20px; height: 20px; }
   .matches { grid-template-columns: minmax(0, 1fr); }
 }
 
@@ -991,13 +1015,38 @@ function dailyStats() {
   const dist = Array(MAX_GUESSES).fill(0); done.filter(v => v.won).forEach(v => dist[v.g.length - 1]++);
   return {played: done.length, wins: done.filter(v => v.won).length, streak, max, dist};
 }
+
+// solve speed -> a ranked-ladder title (guess 1 = Challenger ... guess 8 = Silver, miss = Iron)
+const RANKS = [["Challenger", "#f4c874"], ["Grandmaster", "#ff5a6e"], ["Master", "#c27bff"], ["Diamond", "#6aa0ff"], ["Emerald", "#36d39a"], ["Platinum", "#4cc9c0"], ["Gold", "#e2b04a"], ["Silver", "#b4bfcf"]];
+const rankFor = cur => cur.won ? RANKS[cur.g.length - 1] : ["Iron", "#8c7a6e"];
+
+// scouting report: one extra hint unlocks after every two misses
+const maskName = s => s.split(" ").map(w => w[0] + w.slice(1).replace(/[^\s-]/g, "•")).join(" ");
+const HINTS = [
+  {at: 2, k: "Signature champ", v: M => { const c = M.champs[0] && M.champs[0].c; return c ? `<img src="${DATA.champIcons[c] || ""}" alt="">${esc(c)}` : "–"; }},
+  {at: 4, k: "Real name", v: M => M.real ? `<span class="mask">${esc(maskName(M.real))}</span>` : esc(M.country || "?")},
+  {at: 6, k: "Team", v: M => `<img src="${M.team.logo}" alt="">${M.team.short}`},
+];
+
+let practice = null, lastGuess = null;  // practice = {M, g, done, won} while playing unlimited practice
+function game() {
+  if (practice) return {practice: true, M: practice.M, cur: practice, save() {}};
+  const n = dailyNumber(), all = store.get("daily", {}), cur = all[n] || {g: [], done: false, won: false};
+  return {practice: false, n, M: mysteryFor(n), cur, save() { all[n] = cur; store.set("daily", all); }};
+}
+function startPractice() {
+  const daily = mysteryFor(dailyNumber()), pool = players.filter(p => p !== daily && (!practice || p !== practice.M));
+  practice = {M: pool[Math.floor(Math.random() * pool.length)], g: [], done: false, won: false};
+  lastGuess = null; renderDaily(); window.scrollTo({top: 0, behavior: "smooth"});
+}
+
 function clue(g, m) {
   const near = (x, y, tol) => x === y ? "g" : Math.abs(x - y) <= tol ? "y" : "r";
   const arrow = (x, y) => x === y ? "" : y > x ? "↑" : "↓";
   const sigG = g.champs[0] && g.champs[0].c, sigM = m.champs[0] && m.champs[0].c;
   return [
     {k: "Team", v: `<img src="${g.team.logo}" alt="">${g.team.short}`, c: g.team === m.team ? "g" : g.team.region === m.team.region ? "y" : "r"},
-    {k: "Role", v: RS[g.role], c: g.role === m.role ? "g" : "r"},
+    {k: "Role", v: `<span class="lg">${RS[g.role]}</span><span class="sm">${({Jungle: "Jgl", Support: "Sup"})[RS[g.role]] || RS[g.role]}</span>`, c: g.role === m.role ? "g" : "r"},
     {k: "Region", v: g.team.region, c: g.team.region === m.team.region ? "g" : "r"},
     {k: "Nation", v: esc(g.country || "?"), c: g.country === m.country ? "g" : "r"},
     {k: "OVR", v: `${g.rt.OVR}<i>${arrow(g.rt.OVR, m.rt.OVR)}</i>`, c: near(g.rt.OVR, m.rt.OVR, 3)},
@@ -1006,28 +1055,44 @@ function clue(g, m) {
   ];
 }
 const PS_KDA = {f: 1};
+function heatLine(cur, M) {
+  if (cur.done || !cur.g.length) return "";
+  const last = byId[cur.g[cur.g.length - 1]], cs = clue(last, M), g = cs.filter(c => c.c === "g").length, y = cs.filter(c => c.c === "y").length;
+  const [cls, msg] = g >= 5 ? ["hot", `🔥 Scorching. ${g} of 7 clues match ${esc(last.name)}.`] : g >= 3 ? ["warm", `Getting warm: ${g} green${y ? `, ${y} yellow` : ""}.`]
+    : g + y === 0 ? ["cold", `🧊 Ice cold. Nothing in common with ${esc(last.name)}.`] : ["", `${g} green, ${y} yellow. Keep scouting.`];
+  return `<div class="heat ${cls}">${msg}</div>`;
+}
 function renderDaily() {
   const el = document.getElementById("view-daily");
-  const n = dailyNumber(), M = mysteryFor(n), all = store.get("daily", {}), cur = all[n] || {g: [], done: false, won: false};
+  const {practice: prac, n, M, cur} = game();
   const guesses = cur.g.map(id => byId[id]).filter(Boolean);
   const blur = cur.done ? 0 : Math.max(2, 18 - guesses.length * 2);
   const tomorrow = new Date(); tomorrow.setHours(24, 0, 0, 0);
-  const s = dailyStats(), maxD = Math.max(1, ...s.dist);
-  const rows = guesses.map(g => `<div class="grow">${`<span class="gface"><img src="${g.img}" alt=""><b>${esc(g.name)}</b></span>`}${clue(g, M).map(c => `<span class="cell ${c.c}" title="${c.k}">${c.v}</span>`).join("")}</div>`).join("");
+  const s = dailyStats(), maxD = Math.max(1, ...s.dist), ps = store.get("practice", {played: 0, wins: 0});
+  const [rank, rc] = rankFor(cur), sig = M.champs[0] && M.champs[0].c;
+  const rows = guesses.map(g => { const fresh = g.id === lastGuess;
+    return `<div class="grow ${fresh ? "new" : ""}"><span class="gface"><img src="${g.img}" alt=""><b>${esc(g.name)}</b></span>${clue(g, M).map((c, i) => `<span class="cell ${c.c}" title="${c.k}"${fresh ? ` style="animation-delay:${i * 110}ms"` : ""}>${c.v}</span>`).join("")}</div>`; }).join("");
+  const hints = HINTS.map(h => { const open = cur.done || guesses.length >= h.at;
+    return `<div class="hint ${open ? "open" : ""}"><small>${h.k}</small>${open ? `<b>${h.v(M)}</b>` : `<b class="lock">🔒 after ${h.at} guesses</b>`}</div>`; }).join("");
   el.innerHTML = `<div class="dailywrap">
-    <div class="dhead"><div><span class="label">Scout Daily #${n}</span><h2>Who's the mystery Worlds pro?</h2>
-      <p>Guess any of the 80 Worlds starters. Each guess tells you how close you are, and the photo sharpens as you go. ${MAX_GUESSES} tries.</p></div>
-      <div class="mystery ${cur.done ? (cur.won ? "solved" : "failed") : ""}"><img src="${M.img}" alt="" style="filter:blur(${blur}px) ${cur.done ? "" : "grayscale(.6) brightness(.8)"}">${cur.done ? `<span class="mname">${esc(M.name)}<small>${M.team.short} · ${RS[M.role]}</small></span>` : `<span class="qm">?</span>`}</div></div>
-    ${cur.done ? `<div class="result ${cur.won ? "win" : "lose"}"><b>${cur.won ? `Got it in ${guesses.length}!` : `It was ${esc(M.name)}.`}</b>
-        <span>Next mystery pro in <span class="num" id="dailyCount">${countdown(tomorrow - Date.now())}</span></span>
-        <div class="rbtns"><button class="rand" id="shareDaily">Share result</button><button class="share" data-duel-daily="${M.id}">Face-off ${esc(M.name)} ›</button></div></div>`
-      : `<div class="guessbox"><input id="guessInput" class="search" type="search" placeholder="Type a player, team or role… (${MAX_GUESSES - guesses.length} left)" autocomplete="off"><div class="sugg" id="sugg"></div></div>`}
+    <div class="dhead"><div><span class="label">${prac ? "Practice · unlimited" : `Scout Daily #${n}`}</span><h2>Who's the mystery Worlds pro?</h2>
+      <p>Guess any of the 80 Worlds starters. Every guess compares them to the mystery pro, the photo sharpens, and the scouting report fills in. ${MAX_GUESSES} tries.</p>
+      <div class="hints">${hints}</div></div>
+      <div class="mystery ${cur.done ? (cur.won ? "solved" : "failed") : ""}" ${cur.done && sig && DATA.splash[sig] ? `style="background-image:url(${DATA.splash[sig]})"` : ""}><img src="${M.img}" alt="" style="filter:blur(${blur}px) ${cur.done ? "" : "grayscale(.6) brightness(.8)"}">${cur.done ? `<span class="mname">${esc(M.name)}<small>${M.team.short} · ${RS[M.role]}</small></span>` : `<span class="qm">?</span>`}</div></div>
+    ${cur.done ? `<div class="result ${cur.won ? "win" : "lose"}">
+        <div class="rankb" style="--rc:${rc}"><small>Scout rank</small><b>${rank}</b></div>
+        <b>${cur.won ? `Got ${esc(M.name)} in ${guesses.length}!` : `It was ${esc(M.name)}.`}</b>
+        <span>${prac ? `Practice: ${ps.wins} solved of ${ps.played}` : `Next mystery pro in <span class="num" id="dailyCount">${countdown(tomorrow - Date.now())}</span>`}</span>
+        <div class="rbtns">${prac ? `<button class="rand" id="nextPractice">Next pro ›</button><button class="share" id="backDaily">Back to the daily</button>`
+          : `<button class="rand" id="shareDaily">Share result</button><button class="share" id="nextPractice">Keep playing: practice ›</button>`}
+          <button class="share" data-duel-daily="${M.id}">Face-off ${esc(M.name)} ›</button></div></div>`
+      : `<div class="guessbox"><input id="guessInput" class="search" type="search" placeholder="Type a player, team or role… (${MAX_GUESSES - guesses.length} left)" autocomplete="off"><div class="sugg" id="sugg"></div></div>${heatLine(cur, M)}`}
     <div class="gridhead"><span>Player</span>${["Team","Role","Region","Nation","OVR","KDA","Main"].map(k => `<span>${k}</span>`).join("")}</div>
     <div class="guesses">${rows || `<div class="empty">No guesses yet. Try a superstar first, then narrow it down.</div>`}</div>
     <p class="legend">Green is a match. Yellow is close: same region for teams, within 3 for OVR, within 0.3 for KDA, or a champion in their pool. Arrows point toward the answer.</p>
-    <div class="panel dstats"><h3>Your stats</h3>
+    ${prac ? "" : `<div class="panel dstats"><h3>Your stats</h3>
       <div class="srow4"><div><b class="num">${s.played}</b><small>Played</small></div><div><b class="num">${s.played ? Math.round(100 * s.wins / s.played) : 0}%</b><small>Win rate</small></div><div><b class="num">${s.streak}</b><small>Streak</small></div><div><b class="num">${s.max}</b><small>Best</small></div></div>
-      <div class="dist">${s.dist.map((v, i) => `<div class="drow"><span>${i + 1}</span><i style="width:${Math.max(6, 100 * v / maxD)}%" class="${cur.won && guesses.length === i + 1 ? "me" : ""}">${v}</i></div>`).join("")}</div></div>
+      <div class="dist">${s.dist.map((v, i) => `<div class="drow"><span style="color:${RANKS[i][1]}">${RANKS[i][0]}</span><i style="width:${Math.max(6, 100 * v / maxD)}%" class="${cur.won && guesses.length === i + 1 ? "me" : ""}">${v}</i></div>`).join("")}</div></div>`}
   </div>`;
   const input = el.querySelector("#guessInput");
   if (input) {
@@ -1042,22 +1107,32 @@ function renderDaily() {
     input.focus({preventScroll: true});
   }
 }
+function confetti() {
+  const box = document.createElement("div"), cols = ["#f0c35b", "#3d8bff", "#ff4655", "#45d48f", "#ffffff"];
+  box.className = "confetti";
+  box.innerHTML = Array.from({length: 80}, (_, i) => `<i style="left:${Math.random() * 100}%;background:${cols[i % 5]};animation-delay:${(Math.random() * .5).toFixed(2)}s;animation-duration:${(1.8 + Math.random() * 1.4).toFixed(2)}s"></i>`).join("");
+  document.body.appendChild(box); setTimeout(() => box.remove(), 4000);
+}
 function guess(id) {
-  const n = dailyNumber(), M = mysteryFor(n), all = store.get("daily", {}), cur = all[n] || {g: [], done: false, won: false};
+  const g = game(), {M, cur} = g;
   if (cur.done || cur.g.includes(id)) return;
-  cur.g.push(id);
+  cur.g.push(id); lastGuess = id;
   if (id === M.id) { cur.done = true; cur.won = true; } else if (cur.g.length >= MAX_GUESSES) cur.done = true;
-  all[n] = cur; store.set("daily", all); renderDaily(); updateDailyDot();
+  if (cur.done && g.practice) { const ps = store.get("practice", {played: 0, wins: 0}); ps.played++; if (cur.won) ps.wins++; store.set("practice", ps); }
+  g.save(); renderDaily(); updateDailyDot();
+  if (cur.won) setTimeout(confetti, 350);
 }
 document.getElementById("view-daily").addEventListener("click", e => {
   const g = e.target.closest("[data-guess]"); if (g) { guess(g.dataset.guess); return; }
   const d = e.target.closest("[data-duel-daily]");
   if (d) { const p = byId[d.dataset.duelDaily], rival = players.filter(q => q.role === p.role && q !== p).sort((x, y) => y.rt.OVR - x.rt.OVR)[0];
     state.players.a = p.id; state.players.b = rival.id; state.mode = "players"; setView("faceoff"); return; }
+  if (e.target.closest("#nextPractice")) { startPractice(); return; }
+  if (e.target.closest("#backDaily")) { practice = null; lastGuess = null; renderDaily(); return; }
   if (e.target.closest("#shareDaily")) {
-    const n = dailyNumber(), M = mysteryFor(n), cur = store.get("daily", {})[n];
+    const n = dailyNumber(), M = mysteryFor(n), cur = store.get("daily", {})[n], [rank] = rankFor(cur), st = dailyStats();
     const grid = cur.g.map(id => clue(byId[id], M).map(c => ({g: "🟩", y: "🟨", r: "🟥"})[c.c]).join("")).join("\n");
-    copyText(`Scout Daily #${n} ${cur.won ? cur.g.length : "X"}/${MAX_GUESSES} 🏆\n${grid}\nGuess today's Worlds pro: ${shareUrl("daily")}`, "Result copied. Paste it in chat.");
+    copyText(`Scout Daily #${n}: ${rank} scout (${cur.won ? cur.g.length : "X"}/${MAX_GUESSES})${st.streak > 1 ? ` 🔥${st.streak}` : ""}\n${grid}\nCan you name today's Worlds pro faster? ${shareUrl("daily")}`, "Result copied. Paste it in chat.");
   }
 });
 setInterval(() => { const c = document.getElementById("dailyCount"); if (c && view === "daily") { const t = new Date(); t.setHours(24, 0, 0, 0); c.textContent = countdown(t - Date.now()); } }, 30000);
