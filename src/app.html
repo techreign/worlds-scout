@@ -889,7 +889,7 @@ function matchCard(m) {
   const side = (T, code, s, pct) => {
     const cls = [pick === code ? "picked" : "", win ? (win === code ? "won" : "lost") : ""].join(" ");
     return `<button class="pickbtn ${s} ${cls}" ${open ? `data-pick="${m.id}|${code}"` : "disabled"} aria-label="Pick ${T ? esc(T.name) : "TBD"}">
-      ${T ? `<img src="${T.logo}" alt="">` : `<span class="tbd">?</span>`}<span class="pt">${T ? T.short : "TBD"}</span>
+      ${T ? `<img src="${T.logo}" alt="">` : `<span class="tbd">?</span>`}<span class="pt">${T ? T.short : code && code !== "TBD" ? esc(code) : "TBD"}</span>
       ${T ? `<span class="pp num">${pct}%</span>` : ""}${pick === code ? `<span class="yp">Your pick</span>` : ""}</button>`;
   };
   const mid = m.state === "completed" && m.sa != null ? `<span class="msc num">${m.sa}<em>–</em>${m.sb}</span><span class="mst">Final</span>`
